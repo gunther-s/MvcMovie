@@ -69,12 +69,11 @@ namespace MvcMovie.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
+            
             return View();
         }
 
         // POST: Movies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
@@ -85,6 +84,15 @@ namespace MvcMovie.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var list = new SelectList(new[]
+{
+    new { ID = "1", Name = "name1" },
+    new { ID = "2", Name = "name2" },
+    new { ID = "3", Name = "name3" },
+},
+"ID", "Name", 1);
+
+            ViewData["list"] = list;
             return View(movie);
         }
 
